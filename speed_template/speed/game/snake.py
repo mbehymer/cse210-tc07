@@ -3,13 +3,10 @@ from game.actor import Actor
 from game.point import Point
 
 class Snake:
-    """A limbless reptile. The responsibility of Snake is keep track of its segments. It contains methods for moving and growing among others.
+    """Updates the text and the buffer.
 
     Stereotype:
         Structurer, Information Holder
-
-    Attributes:
-        _body (List): The snake's body (a list of Actor instances)
     """
     def __init__(self):
         """The class constructor.
@@ -26,6 +23,7 @@ class Snake:
     
     def update_text(self, text):
         """
+        Updates the text.
         """
         if text != "*":
 
@@ -33,14 +31,16 @@ class Snake:
             self._buffer.set_text(self._text[0]+self._text[1])
 
     def get_buffer(self):
-
+        """Returns whatever you typed."""
         return self._buffer
 
     def check_word(self, word):
+        """Check if the word you typed is on the screen."""
         if word == self._text[1]:
             return True
         else:
             return False
     def clear_buffer(self):
+        """Resets the buffer."""
         self._text[1] = ""
         self._buffer.set_text(self._text[0])
