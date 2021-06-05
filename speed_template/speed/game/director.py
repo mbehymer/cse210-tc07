@@ -12,12 +12,12 @@ class Director:
         Controller
 
     Attributes:
-        food (Food): The snake's target.
+        food (Food): It holds the word that we need to type.
         input_service (InputService): The input mechanism.
         keep_playing (boolean): Whether or not the game can continue.
         output_service (OutputService): The output mechanism.
         score (Score): The current score.
-        snake (Snake): The player or snake.
+        snake (Snake): The space to type and check the word.
     """
 
     def __init__(self, input_service, output_service):
@@ -47,7 +47,7 @@ class Director:
 
     def _get_inputs(self):
         """Gets the inputs at the beginning of each round of play. In this case,
-        that means getting the desired direction and moving the snake.
+        that means getting the words.
 
         Args:
             self (Director): An instance of Director.
@@ -67,7 +67,7 @@ class Director:
 
     def _do_updates(self):
         """Updates the important game information for each round of play. In 
-        this case, that means checking for a collision and updating the score.
+        this case, that means just moving the word.
 
         Args:
             self (Director): An instance of Director.
@@ -78,8 +78,8 @@ class Director:
         
     def _do_outputs(self):
         """Outputs the important game information for each round of play. In 
-        this case, that means checking if there are stones left and declaring 
-        the winner.
+        this case, that means checking if there are coincidences with the words that are typed and
+        the words generated.
 
         Args:
             self (Director): An instance of Director.

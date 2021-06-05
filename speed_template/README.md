@@ -41,3 +41,6 @@ root                    (project root folder)
 ## Authors
 ---
 * Matthew Behymer (beh20004@gmail.com)
+* Kevin Jones (kevinnjones117@gmail.com)
+* Samuel Rios-Lazo (rioslazosamuel@gmail.com)
+

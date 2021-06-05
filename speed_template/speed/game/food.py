@@ -5,31 +5,33 @@ from game.point import Point
 
 # TODO: Define the Food class here
 class Food():
-    """This makes the food which are the points in the game"""
+    """This makes the word which are the points in the game"""
 
     def __init__(self):
-        """Something goes here...?"""
+        """This loads the words."""
         super().__init__()
         self.word_list = self.load_word_list()
         self.word_items = []
-        self._velocity = Point(0, 1)
-        self._slower = 10
         for i in range(5):
             self.load_words()
 
     def load_word_list(self):
-        with open("cse210-tc07\speed_template\speed\game\words.txt") as word_list:
+        """Open a file with many words."""
+        with open("speed_template/speed/game/words.txt") as word_list:
             word_list = word_list.read()
             word_list = word_list.split()
         return word_list
 
     def get_word(self):
+        """Pick a random word from the words file."""
         return random.choice(self.word_list)
 
     def get_points(self, index):
+        """Calculates the points for the guessed word."""
         return self.word_items[index]._points
 
     def move_word(self):
+        """Moves the word around the screen."""
         for word in self.word_items:
 
             if word._slower == 0:
@@ -40,6 +42,7 @@ class Food():
                 word._slower -= 1
 
     def load_words(self, index = ""):
+        """Loads the words into a list."""
         self.word_items.append(Actor())
         self.word_items[-1]._velocity = Point(0, 1)
         self.word_items[-1]._slower_MAX = random.randint(5, 30)
