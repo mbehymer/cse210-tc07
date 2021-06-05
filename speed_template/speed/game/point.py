@@ -22,7 +22,7 @@ class Point:
 
     def add(self, other):
         """Gets a new point that is the sum of this and the given one.
-
+        
         Args:
             self (Point): An instance of Point.
             other (Point): The Point to add.

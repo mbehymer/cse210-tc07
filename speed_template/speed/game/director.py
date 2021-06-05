@@ -52,8 +52,8 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        direction = self._input_service.get_direction()
-        self._snake.move_head(direction)
+        text = self._input_service.get_letter()
+        self._snake.update_text(text)
 
     def _do_updates(self):
         """Updates the important game information for each round of play. In 
@@ -62,8 +62,12 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
-        self._handle_body_collision()
-        self._handle_food_collision()
+        self._food.move_word()
+        
+        if self._input_service.get_letter() == "*":
+            self._food.set_text("cheese")
+        # self._handle_body_collision()
+        # self._handle_food_collision()
         
     def _do_outputs(self):
         """Outputs the important game information for each round of play. In 
@@ -75,7 +79,7 @@ class Director:
         """
         self._output_service.clear_screen()
         self._output_service.draw_actor(self._food)
-        self._output_service.draw_actors(self._snake.get_all())
+        self._output_service.draw_actor(self._snake.get_buffer())
         self._output_service.draw_actor(self._score)
         self._output_service.flush_buffer()
 
