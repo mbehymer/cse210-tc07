@@ -35,14 +35,15 @@ class Food():
             if word._slower == 0:
 
                 word.move_next()
-                word._slower = random.randint(20, 30)
+                word._slower = word._slower_MAX
             else: 
                 word._slower -= 1
 
     def load_words(self, index = ""):
         self.word_items.append(Actor())
         self.word_items[-1]._velocity = Point(0, 1)
-        self.word_items[-1]._slower = 10
+        self.word_items[-1]._slower_MAX = random.randint(5, 30)
+        self.word_items[-1]._slower = self.word_items[-1]._slower_MAX
         word = random.choice(self.word_list)
         self.word_items[-1].set_text(word)
         if index == "":
