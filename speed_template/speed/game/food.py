@@ -4,39 +4,52 @@ from game.actor import Actor
 from game.point import Point
 
 # TODO: Define the Food class here
-class Food(Actor):
+class Food():
     """This makes the food which are the points in the game"""
 
     def __init__(self):
         """Something goes here...?"""
         super().__init__()
-        self.wordlist = ["apple", "orange", "banana", "wheat", "watermelon"]
+        self.word_list = self.load_word_list()
+        self.word_items = []
         self._velocity = Point(0, 1)
         self._slower = 10
-        self.reset()
+        for i in range(5):
+            self.load_words()
 
+    def load_word_list(self):
+        with open("cse210-tc07\speed_template\speed\game\words.txt") as word_list:
+            word_list = word_list.read()
+            word_list = word_list.split()
+        return word_list
 
+    def get_word(self):
+        return random.choice(self.word_list)
 
-    def get_points(self):
-        return self._points
+    def get_points(self, index):
+        return self.word_items[index]._points
 
     def move_word(self):
-        if self._slower == 0:
+        for word in self.word_items:
 
-            self.move_next()
-            self._slower = 10
-        else: 
-            self._slower -= 1
+            if word._slower == 0:
 
-    def reset(self):
+                word.move_next()
+                word._slower = random.randint(20, 30)
+            else: 
+                word._slower -= 1
 
-        word = random.choice(self.wordlist)
-        super().set_text(word)
-        x = random.randint(1,constants.MAX_X-1)
-        y = random.randint(1,constants.MAX_Y-1)
-        self._position = Point(x, y)
-        self._points = random.randint(1,5)
-
-food = Food()
-
-print(food.get_text())
+    def load_words(self, index = ""):
+        self.word_items.append(Actor())
+        self.word_items[-1]._velocity = Point(0, 1)
+        self.word_items[-1]._slower = 10
+        word = random.choice(self.word_list)
+        self.word_items[-1].set_text(word)
+        if index == "":
+            x = len(self.word_items) * 8
+        else:
+            
+            x = (index + 1) * 8
+        y = random.randint(1,5)
+        self.word_items[-1]._position = Point(x, y)
+        self.word_items[-1]._points = len(self.word_items[-1].get_text())

@@ -52,8 +52,18 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
+    
         text = self._input_service.get_letter()
         self._snake.update_text(text)
+
+        if text == "*":
+            for index in range(len(self._food.word_items) -1, -1, -1):
+                if self._snake.check_word(self._food.word_items[index].get_text()):
+                    points = self._food.get_points(index)
+                    self._score.add_points(points)
+                    del self._food.word_items[index]
+                    self._food.load_words(index)
+            self._snake.clear_buffer()     
 
     def _do_updates(self):
         """Updates the important game information for each round of play. In 
@@ -62,12 +72,9 @@ class Director:
         Args:
             self (Director): An instance of Director.
         """
+                
+
         self._food.move_word()
-        
-        if self._input_service.get_letter() == "*":
-            self._food.set_text("cheese")
-        # self._handle_body_collision()
-        # self._handle_food_collision()
         
     def _do_outputs(self):
         """Outputs the important game information for each round of play. In 
@@ -78,36 +85,8 @@ class Director:
             self (Director): An instance of Director.
         """
         self._output_service.clear_screen()
-        self._output_service.draw_actor(self._food)
+        for word in self._food.word_items:
+            self._output_service.draw_actor(word)
         self._output_service.draw_actor(self._snake.get_buffer())
         self._output_service.draw_actor(self._score)
         self._output_service.flush_buffer()
-
-    def _handle_body_collision(self):
-        """Handles collisions between the snake's head and body. Stops the game 
-        if there is one.
-
-        Args:
-            self (Director): An instance of Director.
-        """
-        head = self._snake.get_head()
-        body = self._snake.get_body()
-        for segment in body:
-            if head.get_position().equals(segment.get_position()):
-                self._keep_playing = False
-                break
-
-    def _handle_food_collision(self):
-        """Handles collisions between the snake's head and the food. Grows the 
-        snake, updates the score and moves the food if there is one.
-
-        Args:
-            self (Director): An instance of Director.
-        """
-        head = self._snake.get_head()
-        if head.get_position().equals(self._food.get_position()):
-            points = self._food.get_points()
-            for n in range(points):
-                self._snake.grow_tail()
-            self._score.add_points(points)
-            self._food.reset() 
